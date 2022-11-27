@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Client;
-use App\Http\Requests\ClientRequest;
+use App\Http\Requests\Client\UpdateClientRequest;
+use App\Http\Requests\Client\StoreClientRequest;
 use Illuminate\Http\Request;
 
 class ClientController extends Controller
@@ -33,10 +34,10 @@ class ClientController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ClientRequest  $request
+     * @param  StoreClientRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ClientRequest $request)
+    public function store(StoreClientRequest $request)
     {
         Client::create($request->validated());
 
@@ -57,34 +58,38 @@ class ClientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Client $client)
     {
-        //
+        return view('clients.edit', compact('client'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  UpdateClientRequest  $request
+     * @param  Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateClientRequest $request, Client $client)
     {
-        //
+        $client->update($request->validated());
+
+        return redirect()->route('clients.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Client  $client
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Client $client)
     {
-        //
+        $client->forceDelete();
+
+        return redirect()->route('clients.index');
     }
 }
