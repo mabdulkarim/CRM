@@ -13,7 +13,8 @@
                 <thead>
                 <tr>
                     <th>#</th>
-                    <th>Name</th>
+                    <th>First Name</th>
+                    <th>Last Name</th>
                     <th>Date Created</th>
                     <th>Role</th>
                     <th>Action</th>
@@ -24,12 +25,22 @@
                     <tr>
                         <td>{{ $loop->iteration }}</td>
                         <td>
-                            {{ $user->name }}</a></td>
+                            {{ $user->first_name }}
+                        </td>
+                        <td>
+                            {{ $user->last_name }}
+                        </td>
                         <td>{{ $user->created_at->format('Y-m-d') }}</td>
                         <td>Admin</td>
                         <td>
-                            <a href="{{ route('users.edit', $user) }}"><i class="fa-solid fas fa-pen fa-lg" style="color:#321fdb"></i></a>
-                            <a href="#"><i class="fa-solid fas fa-user-minus fa-lg" style="color: red"></i></a>
+                            <div class="d-flex">
+                                <a href="{{ route('users.edit', $user) }}"><i class="fa-solid fas fa-pen fa-lg p-1" style="color:#321fdb"></i></a>
+                                <form action="{{ route('users.destroy', $user) }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn p-0"><i class="fa-solid fas fa-user-minus fa-lg" style="color: red"></i></button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @empty
