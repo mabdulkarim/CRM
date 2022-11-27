@@ -29,7 +29,7 @@
                         <td>
                             {{ $client->company_vat }}
                         </td>
-                        <td>{{ $client->company_address }}</td>
+                        <td>{{ $client->company_address.', '. $client->company_city.', '.$client->company_zip  }}</td>
                         <td>
                             <div class="d-flex">
                                 <a href="{{ route('clients.edit', $client) }}"><i class="fa-solid fas fa-pen fa-lg p-1" style="color:#321fdb"></i></a>
