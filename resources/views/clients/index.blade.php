@@ -1,43 +1,39 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="{{ route('users.create') }}">
+    <a href="{{ route('clients.create') }}">
         <x-button-create>
-            {{ __('CREATE USER') }}
+            {{ __('CREATE CLIENT') }}
         </x-button-create>
     </a>
     <div class="card">
         <div class="card-header font-weight-bold">
-            Users list
+            Clients list
         </div>
         <div class="card-body">
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th>#</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Date Created</th>
-                    <th>Role</th>
+                    <th>Company</th>
+                    <th>VAT</th>
+                    <th>Address</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                @forelse($users as $user)
+                @forelse($clients as $client)
                     <tr>
-                        <td>{{ $loop->iteration }}</td>
                         <td>
-                            {{ $user->first_name }}
+                            {{ $client->company_name }}
                         </td>
                         <td>
-                            {{ $user->last_name }}
+                            {{ $client->company_vat }}
                         </td>
-                        <td>{{ $user->created_at->format('Y-m-d') }}</td>
-                        <td>Admin</td>
+                        <td>{{ $client->company_address }}</td>
                         <td>
                             <div class="d-flex">
-                                <a href="{{ route('users.edit', $user) }}"><i class="fa-solid fas fa-pen fa-lg p-1" style="color:#321fdb"></i></a>
-                                <form action="{{ route('users.destroy', $user) }}" method="POST">
+                                <a href="{{ route('clients.edit', $client) }}"><i class="fa-solid fas fa-pen fa-lg p-1" style="color:#321fdb"></i></a>
+                                <form action="{{ route('clients.destroy', $client) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn p-0"><i class="fa-solid fas fa-user-minus fa-lg" style="color: red"></i></button>
@@ -46,7 +42,7 @@
                         </td>
                     </tr>
                 @empty
-                    <h1>NO USERS.</h1>
+                    <h1>NO CLIENTS.</h1>
                 @endforelse
                 </tbody>
             </table>

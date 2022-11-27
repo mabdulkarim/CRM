@@ -12,7 +12,7 @@
         </a>
     </li>
     <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link {{ request()->is("clients/*") ? "c-active" : "" }}" href="{{ route('home') }}">
+        <a class="c-sidebar-nav-link {{ request()->is("clients/*") ? "c-active" : "" }}" href="{{ route('clients.index') }}">
             <i class="c-sidebar-nav-icon fas fa-fw fa-address-card"></i>
             Clients
         </a>
