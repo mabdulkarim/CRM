@@ -2,7 +2,9 @@
 
 @section('content')
     <a href="{{ route('users.create') }}">
-        <div class="btn btn-success btn-lg rounded mb-2"><i class="fa-solid fas fa-user-plus"></i></div>
+        <x-button-create>
+            {{ __('CREATE USER') }}
+        </x-button-create>
     </a>
     <div class="card">
         <div class="card-header font-weight-bold">
