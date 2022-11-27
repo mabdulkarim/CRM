@@ -5,7 +5,7 @@
         <div class="btn btn-success btn-lg rounded mb-2"><i class="fa-solid fas fa-user-plus"></i></div>
     </a>
     <div class="card">
-        <div class="card-header">
+        <div class="card-header font-weight-bold">
             Users list
         </div>
         <div class="card-body">
