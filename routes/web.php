@@ -5,6 +5,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TaskController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,7 +28,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::resources([
         'users' => UserController::class,
         'clients' => ClientController::class,
-        'projects' => ProjectController::class
+        'projects' => ProjectController::class,
+        'tasks' => TaskController::class
     ], [
         'except' => ['show']
     ]);
