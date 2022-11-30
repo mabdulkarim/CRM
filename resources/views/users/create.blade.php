@@ -7,7 +7,7 @@
                 CREATE A USER
             </div>
             <div class="card-body register-card-body">
-                <form method="post" action="{{ route('users.store') }}">
+                <form action="{{ route('users.store') }}" method="POST">
                     @csrf
 
                     <div class="input-group mb-3">

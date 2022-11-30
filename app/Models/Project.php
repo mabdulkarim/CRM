@@ -12,14 +12,14 @@ class Project extends Model
     protected $fillable = [
         'user_id',
         'client_id',
-        'name',
+        'title',
         'description',
         'deadline',
     ];
 
-    public function users()
+    public function user()
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function client()

@@ -18,7 +18,7 @@
         </a>
     </li>
     <li class="c-sidebar-nav-item">
-        <a class="c-sidebar-nav-link {{ request()->is("projects/*") ? "c-active" : "" }}" href="{{ route('home') }}">
+        <a class="c-sidebar-nav-link {{ request()->is("projects/*") ? "c-active" : "" }}" href="{{ route('projects.index') }}">
             <i class="c-sidebar-nav-icon fas fa-fw fa-copy"></i>
             Projects
         </a>

@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('projects', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('title');
             $table->foreignId('user_id')->constrained();
             $table->foreignId('client_id')->constrained();
-            $table->longText('description');
-            $table->datetime('deadline');
+            $table->longText('description')->nullable();
+            $table->date('deadline');
             $table->timestamps();
             $table->softDeletes();
         });
