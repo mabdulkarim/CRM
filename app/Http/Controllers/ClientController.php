@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Http\Requests\Client\UpdateClientRequest;
 use App\Http\Requests\Client\StoreClientRequest;
-use Illuminate\Http\Request;
+use Illuminate\Database\QueryException;
 
 class ClientController extends Controller
 {
@@ -77,7 +77,11 @@ class ClientController extends Controller
      */
     public function destroy(Client $client)
     {
-        $client->forceDelete();
+        try {
+            $client->forceDelete();
+        } catch (QueryException $e) {
+            return redirect()->route('clients.index')->withErrors(['status' => 'Can\'t delete client. Delete the project that is associated with this client first.']);
+        }
 
         return redirect()->route('clients.index');
     }

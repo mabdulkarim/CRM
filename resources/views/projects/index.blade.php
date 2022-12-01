@@ -6,9 +6,18 @@
     </a>
 
     <div class="card">
-        <div class="card-header">
+        <div class="card-header font-weight-bold">
             Projects list
         </div>
+
+        @if($errors->has('status'))
+            @error('status')
+            <div class="alert alert-danger" role="alert">
+                {{ $message }}
+            </div>
+            @enderror
+        @endif
+
         <div class="card-body">
             <table class="table table-striped table-hover">
                 <thead>

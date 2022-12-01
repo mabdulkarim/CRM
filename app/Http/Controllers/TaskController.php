@@ -2,6 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Task\TaskRequest;
+use App\Models\Client;
+use App\Models\Project;
+use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -13,7 +18,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        $tasks = Task::with(['user', 'client'])->get();
+
+        return view('tasks.index', compact('tasks'));
     }
 
     /**
@@ -23,27 +30,33 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        $users = User::all();
+        $clients = Client::all();
+        $projects = Project::all();
+
+        return view('tasks.create', compact(['users', 'clients', 'projects']));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  TaskRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(TaskRequest $request)
     {
-        //
+        Task::create($request->validated());
+
+        return redirect()->route('tasks.index');
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Task $task)
     {
         //
     }
@@ -51,34 +64,41 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Task $task)
     {
-        //
+        $users = User::all();
+        $clients = Client::all();
+        $projects = Project::all();
+
+        return view('tasks.edit', compact(['task', 'users', 'clients', 'projects']));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  TaskRequest  $request
+     * @param  Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(TaskRequest $request, Task $task)
     {
-        //
+        $task->update($request->validated());
+
+        return redirect()->route('tasks.index');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Task $task)
     {
-        //
+        $task->forceDelete();
+        return redirect()->route('tasks.index');
     }
 }
