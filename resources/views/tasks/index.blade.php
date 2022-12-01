@@ -1,48 +1,42 @@
 @extends('layouts.app')
 
 @section('content')
-    <a href="{{ route('clients.create') }}">
-        <x-button-create>
-            {{ __('CREATE CLIENT') }}
-        </x-button-create>
+    <a href="{{ route('tasks.create') }}">
+        <x-button-create>CREATE PROJECT</x-button-create>
     </a>
+
     <div class="card">
         <div class="card-header font-weight-bold">
-            Clients list
+            Tasks list
         </div>
-
-        @if($errors->has('status'))
-            @error('status')
-            <div class="alert alert-danger" role="alert">
-                {{ $message }}
-            </div>
-            @enderror
-        @endif
-
         <div class="card-body">
             <table class="table table-striped table-hover">
                 <thead>
                 <tr>
-                    <th>Company</th>
-                    <th>VAT</th>
-                    <th>Address</th>
+                    <th>Title</th>
+                    <th>Assigned to</th>
+                    <th>Client</th>
+                    <th>Deadline</th>
                     <th>Action</th>
                 </tr>
                 </thead>
                 <tbody>
-                @forelse($clients as $client)
+                @forelse($tasks as $task)
                     <tr>
                         <td>
-                            {{ $client->company_name }}
+                            {{ $task->title }}
                         </td>
                         <td>
-                            {{ $client->company_vat }}
+                            {{ $task->user->first_name . ' ' . $task->user->last_name }}
                         </td>
-                        <td>{{ $client->company_address.', '. $client->company_city.', '.$client->company_zip  }}</td>
+                        <td>
+                            {{ $task->client->company_name }}
+                        </td>
+                        <td>{{ $task->deadline }}</td>
                         <td>
                             <div class="d-flex">
-                                <a href="{{ route('clients.edit', $client) }}"><i class="fa-solid fas fa-pen fa-lg p-1" style="color:#321fdb"></i></a>
-                                <form action="{{ route('clients.destroy', $client) }}" method="POST">
+                                <a href="{{ route('tasks.edit', $task) }}"><i class="fa-solid fas fa-pen fa-lg p-1" style="color:#321fdb"></i></a>
+                                <form action="{{ route('tasks.destroy', $task) }}" method="POST">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn p-0"><i class="fa-solid fas fa-user-minus fa-lg" style="color: red"></i></button>
@@ -51,7 +45,7 @@
                         </td>
                     </tr>
                 @empty
-                    <h1>NO CLIENTS.</h1>
+                    <h1>NO TASKS.</h1>
                 @endforelse
                 </tbody>
             </table>

@@ -6,6 +6,7 @@ use App\Http\Requests\Project\ProjectRequest;
 use App\Models\Client;
 use App\Models\Project;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
 class ProjectController extends Controller
@@ -95,7 +96,11 @@ class ProjectController extends Controller
      */
     public function destroy(Project $project)
     {
-        $project->forceDelete();
+        try {
+            $project->forceDelete();
+        } catch (QueryException $e) {
+            return redirect()->route('clients.index')->withErrors(['status' => 'Can\'t delete project. Delete the task that is associated with this project first.']);
+        }
 
         return redirect()->route('projects.index');
     }
