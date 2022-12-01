@@ -50,5 +50,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $tasks->links('vendor.pagination.bootstrap-5') }}
     </div>
 @endsection
