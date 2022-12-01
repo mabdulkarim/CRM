@@ -51,5 +51,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $users->links('vendor.pagination.bootstrap-5') }}
     </div>
 @endsection
