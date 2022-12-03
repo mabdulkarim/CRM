@@ -29,7 +29,7 @@ class TaskFactory extends Factory
             'project_id' => $projectIds->random(),
             'title' => $this->faker->sentence,
             'description' => $this->faker->realText(150),
-            'deadline' => $this->faker->dateTime('+1 month', '+1 year')
+            'deadline' => $this->faker->dateTimeBetween('+1 month', '+1 year')
         ];
     }
 }
