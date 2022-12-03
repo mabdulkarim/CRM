@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+    @hasrole('admin')
     <a href="{{ route('users.create') }}">
         <x-button-create>
             {{ __('CREATE USER') }}
         </x-button-create>
     </a>
+    @endhasrole
+
     <div class="card">
         <div class="card-header font-weight-bold">
             Users list
@@ -19,7 +22,9 @@
                     <th>Last Name</th>
                     <th>Date Created</th>
                     <th>Role</th>
+                    @hasrole('admin')
                     <th>Action</th>
+                    @endhasrole
                 </tr>
                 </thead>
                 <tbody>
@@ -33,7 +38,12 @@
                             {{ $user->last_name }}
                         </td>
                         <td>{{ $user->created_at->format('Y-m-d') }}</td>
-                        <td>Admin</td>
+                        <td>
+                            @foreach($user->roles as $role)
+                                {{ $role->name }}
+                            @endforeach
+                        </td>
+                        @hasrole('admin')
                         <td>
                             <div class="d-flex">
                                 <a href="{{ route('users.edit', $user) }}"><i class="fa-solid fas fa-pen fa-lg p-1" style="color:#321fdb"></i></a>
@@ -44,6 +54,7 @@
                                 </form>
                             </div>
                         </td>
+                        @endhasrole
                     </tr>
                 @empty
                     <h1>NO USERS.</h1>

@@ -9,6 +9,11 @@ use Illuminate\Contracts\View\View;
 
 class UserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('role:admin')->except('index');
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +21,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::paginate(15);
+        $users = User::with('roles')->paginate(15);
         return view('users.index', compact('users'));
     }
 
