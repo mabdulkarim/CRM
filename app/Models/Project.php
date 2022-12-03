@@ -2,8 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Carbon;
 
 class Project extends Model
 {
@@ -16,6 +18,13 @@ class Project extends Model
         'description',
         'deadline',
     ];
+
+    public function deadline(): Attribute
+    {
+        return Attribute::get(
+            fn ($value) => Carbon::parse($value)->format('m-d-Y')
+        );
+    }
 
     public function user()
     {
