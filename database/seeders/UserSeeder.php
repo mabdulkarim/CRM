@@ -26,7 +26,17 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
+        $user = User::create([
+            'first_name' => 'user',
+            'last_name' => 'user',
+            'email' => 'user@user.com',
+            'email_verified_at' => now(),
+            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
+            'remember_token' => Str::random(10),
+        ]);
+
         $admin->assignRole('admin');
+        $user->assignRole('user');
 
         User::factory(20)->create();
     }
