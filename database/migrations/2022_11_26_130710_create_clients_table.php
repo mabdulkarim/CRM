@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('company_city');
             $table->string('company_zip');
             $table->integer('company_vat');
+            $table->boolean('is_active')->default(1);
             $table->timestamps();
             $table->softDeletes();
         });
