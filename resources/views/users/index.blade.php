@@ -45,14 +45,12 @@
                         </td>
                         @hasrole('admin')
                         <td>
-                            <div class="d-flex">
-                                <a href="{{ route('users.edit', $user) }}"><i class="fa-solid fas fa-pen fa-lg p-1" style="color:#321fdb"></i></a>
-                                <form action="{{ route('users.destroy', $user) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn p-0"><i class="fa-solid fas fa-user-minus fa-lg" style="color: red"></i></button>
-                                </form>
-                            </div>
+                            <a href="{{ route('users.edit', $user) }}" class="btn btn-info btn-sm">Edit</a>
+                            <form action="{{ route('users.destroy', $user) }}" method="POST" onsubmit="return confirm('Are you sure?')" style="display: inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                            </form>
                         </td>
                         @endhasrole
                     </tr>
