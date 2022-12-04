@@ -10,7 +10,6 @@
         <div class="card-header font-weight-bold">
             Clients list
         </div>
-        <div class="card-body">
             @if($errors->has('status'))
                 @error('status')
                 <div class="alert alert-danger" role="alert">
@@ -18,8 +17,6 @@
                 </div>
                 @enderror
             @endif
-        </div>
-
         <div class="d-flex justify-content-end">
             <div class="pr-3">
                 <form action="{{ route('clients.index') }}" method="GET">
