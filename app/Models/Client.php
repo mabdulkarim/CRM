@@ -20,6 +20,11 @@ class Client extends Model
         'company_vat'
     ];
 
+    public function scopeIsActive($query)
+    {
+        return $query->where('is_active', 1);
+    }
+
     public function projects()
     {
         return $this->hasMany('projects');

@@ -6,6 +6,7 @@ use App\Models\Client;
 use App\Http\Requests\Client\UpdateClientRequest;
 use App\Http\Requests\Client\StoreClientRequest;
 use Illuminate\Database\QueryException;
+use Illuminate\Http\Request;
 
 class ClientController extends Controller
 {
@@ -14,9 +15,15 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::paginate(15);
+        $is_active = null;
+
+        if (in_array($request->is_active, ['true', 'false']) && $request->is_active === 'true') {
+            $is_active = true;
+        }
+
+        $clients = Client::when($is_active, fn($query) => $query->isActive())->paginate(15);
 
         return view('clients.index', compact('clients'));
     }
