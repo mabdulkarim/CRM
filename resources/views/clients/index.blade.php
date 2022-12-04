@@ -24,8 +24,8 @@
                     <div class="form-group">
                         <label for="is_active">Only active: </label>
                         <select class="form-control" name="is_active" id="is_active" onchange="this.form.submit()">
-                            <option value="false" {{ request('is_active') === 'false' ? 'selected' : '' }}>No</option>
-                            <option value="true" {{ request('is_active') === 'true' ? 'selected' : '' }}>Yes</option>
+                            <option value="true" {{ $is_active ? 'selected' : '' }}>Yes</option>
+                            <option value="false" {{ $is_active === null ? 'selected' : '' }}>No</option>
                         </select>
                     </div>
                 </form>
