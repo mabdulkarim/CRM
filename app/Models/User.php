@@ -48,6 +48,11 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function scopeIsActive($query)
+    {
+        return $query->where('is_active', 1);
+    }
+
     protected function password(): Attribute
     {
         return Attribute::set(
