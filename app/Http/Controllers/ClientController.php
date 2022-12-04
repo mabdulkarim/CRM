@@ -25,7 +25,7 @@ class ClientController extends Controller
 
         $clients = Client::when($is_active, fn($query) => $query->isActive())->paginate(15);
 
-        return view('clients.index', compact(['clients', 'is_active']));
+        return view('clients.index', compact('clients'));
     }
 
     /**
