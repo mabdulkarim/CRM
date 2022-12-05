@@ -13,6 +13,21 @@
         <div class="card-header font-weight-bold">
             Users list
         </div>
+
+        <div class="d-flex justify-content-end">
+            <div class="pr-3">
+                <form action="{{ route('users.index') }}" method="GET">
+                    <div class="form-group">
+                        <label for="deleted">Show deleted: </label>
+                        <select class="form-control" name="deleted" id="deleted" onchange="this.form.submit()">
+                            <option value="false" {{ request('deleted') === 'false' ? 'selected' : '' }}>No</option>
+                            <option value="true" {{ request('deleted') === 'true' ? 'selected' : '' }}>Yes</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+        </div>
+
         <div class="card-body">
             <table class="table table-striped table-hover">
                 <thead>
@@ -22,6 +37,9 @@
                     <th>Last Name</th>
                     <th>Date Created</th>
                     <th>Role</th>
+                    @if ($deleted)
+                        <th>Deleted at</th>
+                    @endif
                     @hasrole('admin')
                     <th>Action</th>
                     @endhasrole
@@ -43,6 +61,11 @@
                                 {{ $role->name }}
                             @endforeach
                         </td>
+                        @if ($deleted)
+                            <td>
+                                {{ $user->deleted_at ? $user->deleted_at->format('Y-m-d') : 'Not Deleted.' }}
+                            </td>
+                        @endif
                         @hasrole('admin')
                         <td>
                             <a href="{{ route('users.edit', $user) }}" class="btn btn-info btn-sm">Edit</a>
@@ -60,6 +83,6 @@
                 </tbody>
             </table>
         </div>
-        {{ $users->links('vendor.pagination.bootstrap-5') }}
+        {{ $users->withQueryString()->links('vendor.pagination.bootstrap-5') }}
     </div>
 @endsection

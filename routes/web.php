@@ -25,11 +25,14 @@ use App\Http\Controllers\TaskController;
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/', [HomeController::class, 'index'])->name('home');
 
-    Route::resource('users', UserController::class); // middleware for admin in constructor
-    Route::resource('clients', ClientController::class);
-    Route::resource('projects', ProjectController::class);
-    Route::resource('tasks', TaskController::class);
+    Route::group(['middleware' => 'verified'], function () {
+        Route::resource('users', UserController::class); // middleware for admin in constructor
+        Route::resource('clients', ClientController::class);
+        Route::resource('projects', ProjectController::class);
+        Route::resource('tasks', TaskController::class);
+    });
+
 
 });
 
-Auth::routes();
+Auth::routes(['verify' => true]);

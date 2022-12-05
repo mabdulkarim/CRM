@@ -10,13 +10,15 @@
         <div class="card-header font-weight-bold">
             Clients list
         </div>
-            @if($errors->has('status'))
-                @error('status')
-                <div class="alert alert-danger" role="alert">
-                    {{ $message }}
-                </div>
-                @enderror
-            @endif
+
+        @if($errors->has('status'))
+            @error('status')
+            <div class="alert alert-danger" role="alert">
+                {{ $message }}
+            </div>
+            @enderror
+        @endif
+
         <div class="d-flex justify-content-end">
             <div class="pr-3">
                 <form action="{{ route('clients.index') }}" method="GET">
@@ -25,7 +27,7 @@
                         <label for="is_active">Only active: </label>
                         <select class="form-control" name="is_active" id="is_active" onchange="this.form.submit()">
                             <option value="true" {{ $is_active ? 'selected' : '' }}>Yes</option>
-                            <option value="false" {{ $is_active === null ? 'selected' : '' }}>No</option>
+                            <option value="false" {{ $is_active ? '' : 'selected' }}>No</option>
                         </select>
                     </div>
                 </form>
@@ -67,6 +69,6 @@
                 </tbody>
             </table>
         </div>
-        {{ $clients->links('vendor.pagination.bootstrap-5') }}
+        {{ $clients->withQueryString()->links('vendor.pagination.bootstrap-5') }}
     </div>
 @endsection

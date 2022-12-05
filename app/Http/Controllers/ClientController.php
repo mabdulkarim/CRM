@@ -17,7 +17,7 @@ class ClientController extends Controller
      */
     public function index(Request $request)
     {
-        $is_active = null;
+        $is_active = false;
 
         if (in_array($request->is_active, ['true', 'false']) && $request->is_active === 'true') {
             $is_active = true;
