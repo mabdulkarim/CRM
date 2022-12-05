@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\User\StoreUserRequest;
 use App\Http\Requests\User\UpdateUserRequest;
 use App\Models\User;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\View\View;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -21,8 +23,17 @@ class UserController extends Controller
      */
     public function index()
     {
-        $users = User::with('roles')->paginate(15);
-        return view('users.index', compact('users'));
+        $deleted = false;
+
+        if (in_array(request('deleted'), ['true', 'false']) && request('deleted') === 'true') {
+            $deleted = true;
+        }
+
+        $users = User::with('roles')
+                ->when($deleted, fn($query) => $query->withTrashed())
+                ->paginate(15);
+
+        return view('users.index', compact('users', 'deleted'));
     }
 
     /**
@@ -43,7 +54,10 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request)
     {
-        User::create($request->validated());
+        $user = User::create($request->validated());
+
+        $user->assignRole('user');
+        event(new Registered($user));
 
         return redirect()->route('users.index');
     }
@@ -81,7 +95,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        $user->forceDelete();
+        $user->delete();
 
         return redirect()->route('users.index');
     }
