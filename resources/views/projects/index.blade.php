@@ -12,7 +12,7 @@
 
         @if($errors->has('status'))
             @error('status')
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger m-2" role="alert">
                 {{ $message }}
             </div>
             @enderror

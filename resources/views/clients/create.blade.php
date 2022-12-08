@@ -2,7 +2,7 @@
 
 @section('content')
     <div class="fluid-container">
-        <form action="{{ route('clients.store') }}" method="POST">
+        <form action="{{ route('clients.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
 
             <div class="card w-100">
@@ -34,7 +34,7 @@
                                 @enderror
                         </div>
                     </div>
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col">
                                 <label for="company_address">Company address</label>
                                 <input type="text"
@@ -68,6 +68,13 @@
                                         <div class="invalid-feedback">{{ $message }}</div>
                                     @enderror
                             </div>
+                        </div>
+                        <div class="col mb-3 p-0">
+                            <label for="formFile" class="form-label">Company logo</label>
+                            <input class="form-control @error('logo') is-invalid @enderror" type="file" id="formFile" name="logo">
+                            @error('logo')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
                         </div>
                 </div>
             </div>

@@ -11,9 +11,18 @@
             Clients list
         </div>
 
+        @if (Session::get('success'))
+            <div class="alert alert-success alert-dismissible fade show m-2" role="alert">
+                {{ Session::get('success') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+
         @if($errors->has('status'))
             @error('status')
-            <div class="alert alert-danger" role="alert">
+            <div class="alert alert-danger m-2" role="alert">
                 {{ $message }}
             </div>
             @enderror
@@ -48,6 +57,7 @@
                 @forelse($clients as $client)
                     <tr>
                         <td>
+                            <img src="{{ asset($client->getFirstMediaUrl('logos', 'thumb')) }}" class="rounded-circle" alt="">
                             {{ $client->company_name }}
                         </td>
                         <td>

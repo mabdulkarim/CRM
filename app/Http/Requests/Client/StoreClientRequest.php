@@ -29,6 +29,7 @@ class StoreClientRequest extends FormRequest
             'company_address' => ['required'],
             'company_city' => ['required', 'string'],
             'company_zip' => ['required'],
+            'logo' => ['mimes:jpeg,png'],
             'contact_name' => ['required', 'string', 'max:255'],
             'contact_email' => ['required', 'email', 'string', 'max:255', 'unique:clients'],
             'contact_phone_number' => ['required', 'string']
