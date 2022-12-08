@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Client;
 use App\Http\Requests\Client\UpdateClientRequest;
 use App\Http\Requests\Client\StoreClientRequest;
+use App\Services\ClientService;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -46,9 +47,12 @@ class ClientController extends Controller
      */
     public function store(StoreClientRequest $request)
     {
-        Client::create($request->validated());
+        $clientInformation = $request->safe()->except(['logo']);
+        $client = Client::create($clientInformation);
 
-        return redirect()->route('clients.index');
+        (new ClientService())->requestHasLogoFile($request, $client);
+
+        return redirect()->route('clients.index')->with('success', 'Created client successfully!');
     }
 
     /**
@@ -71,9 +75,12 @@ class ClientController extends Controller
      */
     public function update(UpdateClientRequest $request, Client $client)
     {
-        $client->update($request->validated());
+        $clientInformation = $request->safe()->except(['logo']);
+        $client->update($clientInformation);
 
-        return redirect()->route('clients.index');
+        (new ClientService())->requestHasLogoFile($request, $client);
+
+        return redirect()->route('clients.index')->with('success', 'Client updated successfully!');
     }
 
     /**
